@@ -1,9 +1,7 @@
-// var application = require
 
 var express = require('express');
+var application = new express();
 
-var appplication = new express();
 
-
-appplication.listen(3001);
+application.listen(3001);
 
