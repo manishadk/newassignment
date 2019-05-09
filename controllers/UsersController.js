@@ -2,7 +2,26 @@ var usermodel = require('../models/UsersModel');
 var bcrypt = require('bcrypt');
 var saltRounds = 10; 
 
+function validator(req,res,next){
 
+usermodel.User.findOne({
+	where : { username:req.body.username}
+})
+.then(function(result){
+next({"status":409, "message":"user already exists"})
+})
+.catch(function(err){
+
+})
+
+
+
+
+
+
+
+
+}
 
 // function validator (req,res,next){
 // usermodel.User.findOne({
