@@ -8,10 +8,15 @@ usermodel.User.findOne({
 	where : { username:req.body.username}
 })
 .then(function(result){
+	console.log(result);
+	if (result.dataValues != ' '){
+
 next({"status":409, "message":"user already exists"})
+
+	}
 })
 .catch(function(err){
-
+next();
 })
 
 
