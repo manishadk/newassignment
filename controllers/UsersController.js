@@ -3,6 +3,7 @@ var bcrypt = require('bcrypt');
 var saltRounds = 10; 
 
 
+
 // function validator (req,res,next){
 // usermodel.User.findOne({
 // 	where : {username:req.body.username}
