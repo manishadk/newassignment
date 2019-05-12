@@ -3,7 +3,13 @@ var express = require('express');
 var application = new express();
 var bodyParser = require('body-parser');
 
-var userController = require('./controllers/UsersController')
+var userController = require('./controllers/UsersController');
+
+var authController = require('./controllers/AuthenticationController');
+
+
+
+// // var authController = require('./controllers/AuthController');
 
 //this is the first middleware - application middleware , all routes hit this middleware first
 application.use(function(req,res,next){
@@ -17,24 +23,59 @@ application.use(function(req,res,next){
 // this will parse the json data in form body that arrives from client-browser (ajax)
 application.use(bodyParser.json());
 
-// application.post('/v1/users', userController.validator, userController.hashGenerator, userController.registerUser, function(req,res,next){
-		
-// 		res.status(req.responseParam.status);
-// 		res.send({"message":req.responseParam.message});
 
-// // console.log(req.responseParam);
-
-// })
-
-application.post('/v1/users',userController.hashGenerator, userController.registerUser, function(req,res){
+application.post('/v1/users',userController.validator, userController.hashGenerator, userController.registerUser, function(req,res){
 	
 	res.status(201);
 	res.send({"message":"user was registered"})
-	// res.status(201);
-	// res.send({"sdfsd":"sdfsdf"});
-	// res.json({""})
+
 })
 
+
+application.post('/v1/auth',authController.validator,authController.check, function(req,res){
+
+	res.status(200);
+	res.send({"message":"You have succesfuly logged in"})
+
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// application.post('/v1/auth',authController.validator,authController.check,function(req,res){
+// 	res.status(200);
+// 	res.send('sdfsdf')
+
+
+	
+// })
 
 
 application.use(function(err,req,res,next){

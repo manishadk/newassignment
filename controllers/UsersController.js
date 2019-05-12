@@ -2,47 +2,47 @@ var usermodel = require('../models/UsersModel');
 var bcrypt = require('bcrypt');
 var saltRounds = 10; 
 
-function validator(req,res,next){
+// function validator(req,res,next){
 
-usermodel.User.findOne({
-	where : { username:req.body.username}
-})
-.then(function(result){
-	console.log(result);
-	if (result.dataValues != ' '){
-
-next({"status":409, "message":"user already exists"})
-
-	}
-})
-.catch(function(err){
-next();
-})
-
-
-
-
-
-
-
-
-}
-
-// function validator (req,res,next){
 // usermodel.User.findOne({
-// 	where : {username:req.body.username}
+// 	where : { username:req.body.username}
 // })
 // .then(function(result){
-// 	console.log(result.dataValues);
-// if (result.dataValues != '') {
-// 	next({"status":409,"message":'username already exists'})
-// }
+// 	console.log(result);
+// 	if (result.dataValues != ' '){
+
+// next({"status":409, "message":"user already exists"})
+
+// 	}
 // })
 // .catch(function(err){
-// 	next();
+// next();
 // })
 
+
+
+
+
+
+
+
 // }
+
+function validator (req,res,next){
+usermodel.User.findOne({
+	where : {username:req.body.username}
+})
+.then(function(result){
+	console.log(result.dataValues);
+if (result.dataValues != '') {
+	next({"status":409,"message":'username already exists'})
+}
+})
+.catch(function(err){
+	next();
+})
+
+}
 
 
 // function hashGenerator (req,res,next){
@@ -83,7 +83,7 @@ function hashGenerator(req,res,next){
 req.body.password // this is the plaintext password
 bcrypt.hash(req.body.password, saltRounds)
 .then(function(hash){
-	console.log(hash);
+	// console.log(hash);
 	req.hashvalue = hash;
 next();
 })
@@ -114,6 +114,7 @@ next({"status":500, "message":"DB Error"})
 }
 
 module.exports = {
+	validator,
 	registerUser,
 	hashGenerator
 }
