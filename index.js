@@ -3,6 +3,8 @@ var express = require('express');
 var application = new express();
 var bodyParser = require('body-parser');
 
+var usermodel = require('./models/UsersModel')
+
 var userController = require('./controllers/UsersController');
 
 var authController = require('./controllers/AuthenticationController');
@@ -30,7 +32,24 @@ application.post('/v1/users',userController.validator, userController.hashGenera
 	res.send({"message":"user was registered"})
 
 })
+application.get('/v1/users', function(req,res){
 
+usermodel.User.findAll({
+  attributes: ['username', 'address']
+})
+.then(function(result){
+	console.log(result);
+
+res.json(result);
+})
+.catch(function(err){
+
+})
+
+
+
+
+})
 
 application.post('/v1/auth',authController.validator,authController.check, function(req,res){
 
