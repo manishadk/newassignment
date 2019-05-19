@@ -46,6 +46,42 @@ res.json(result);
 })
 })
 
+// get single user
+application.get('/v1/users/:id',function(req,res){
+
+	usermodel.User.findOne({
+		where : {id:req.params.id  }
+	})
+	.then(function(result){
+res.status(200);
+res.json(result)
+	})
+	.catch(function(err){
+
+	})
+})
+
+
+// edit single user
+application.put('/v1/users/:id', function(req,res){
+
+	usermodel.User.update({
+		username:req.body.username,
+		address:req.body.address
+	},
+	{where: { id:req.params.id}
+})
+	.then(function(result){
+		res.status(201);
+		res.send({"message":"User Edited succesfuly"})
+	})
+	.catch(function(err){
+
+	})
+})
+
+
+// delete singer user
 application.delete('/v1/users/:id', function(req,res){
 	console.log(req.params.id)
 
@@ -61,9 +97,6 @@ res.send({"message":"deleted succesfuly"});
 	})
 })
 
-// application.get('/v1/users/:id',function(req,res){
-// 	console.log(req.params);
-// })
 
 application.post('/v1/auth',authController.validator,authController.check, function(req,res){
 
