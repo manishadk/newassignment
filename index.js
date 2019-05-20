@@ -18,7 +18,7 @@ application.use(function(req,res,next){
 
 	res.setHeader('Access-Control-Allow-Origin', '*');
 	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-	res.setHeader('Access-Control-Allow-Headers', 'content-type,X-Requested-With');
+	res.setHeader('Access-Control-Allow-Headers', 'content-type,X-Requested-With,authorization');
 	next(); // next passes to another application middleware 
 })
 
@@ -32,8 +32,10 @@ application.post('/v1/users',userController.validator, userController.hashGenera
 	res.send({"message":"user was registered"})
 
 })
-application.get('/v1/users', function(req,res){
+application.get('/v1/users',authController.tokenVerify, function(req,res){
 
+
+console.log(req.headers);
 usermodel.User.findAll({
   attributes: ['id','username', 'address']
 })
@@ -98,21 +100,19 @@ res.send({"message":"deleted succesfuly"});
 })
 
 
-application.post('/v1/auth',authController.validator,authController.check, function(req,res){
+application.post('/v1/auth',authController.validator,authController.check,authController.jwtTokenGen, function(req,res){
 
-	res.status(200);
-	res.send({"message":"You have succesfuly logged in"})
+res.status(200);
+res.send({"message":"token generated succesfuly !","token":req.genToken})
+
+//status // json , send as object or json 
+// console.log(req.genToken)
+	// res.status(200);
+	// res.send({"message":"You have succesfuly logged in"})
+	//send token to browser
 
 })
 
-
-// application.post('/v1/auth',authController.validator,authController.check,function(req,res){
-// 	res.status(200);
-// 	res.send('sdfsdf')
-
-
-	
-// })
 
 
 application.use(function(err,req,res,next){
