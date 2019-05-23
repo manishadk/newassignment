@@ -78,8 +78,17 @@ function jwtTokenGen(req, res, next) {
 
 
 function tokenVerify(req,res,next){
-	console.log(req.headers.authorization)
-	let token = req.headers.authorization.slice(6,req.headers.authorization.length)
+
+	console.log(req.headers)
+
+if(req.headers.authorization ==  undefined){
+
+			next({status:500,message:'no authorization header present'})
+
+}
+else{
+
+	let token = req.headers.authorization.slice(7,req.headers.authorization.length)
 
 	jwt.verify(token,'thisissecretkey',function(err,decoded){
 		console.log(decoded);
@@ -91,6 +100,8 @@ function tokenVerify(req,res,next){
 			next();
 		}
 	})
+
+}
 }
 
 module.exports = {
