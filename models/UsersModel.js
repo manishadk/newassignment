@@ -1,19 +1,5 @@
 var db = require('../configs/databaseconfig')
-/**
-*@swagger
-*definitions:
-* Users:
-*  type:object
-*  properties:
-*   id:
-*    type:integer
-*   username:
-*    type:string
-*   password:
-*    type:string
-*   address:
-*    type:string
-*/
+
 
 const User = db.sequelize.define('User', {
   // attributes

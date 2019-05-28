@@ -4,6 +4,10 @@ const bodyParser = require('body-parser');
 
 const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
+// put this in the beginning of your app.js/server.js
+let initCallback;
+
+// debugger;
 
 var swaggerDefinition = {
 
@@ -122,12 +126,12 @@ application.post('/v1/users', userController.validator, userController.hashGener
 application.get('/v1/users', authController.tokenVerify, function(req, res) {
 
 
-	console.log(req.headers);
 	usermodel.User.findAll({
 			attributes: ['id', 'username', 'address']
 		})
 		.then(function(result) {
 			// response can be sent from within the middleware 
+			res.status(200);
 			res.json(result);
 		})
 		.catch(function(err) {
@@ -310,52 +314,19 @@ application.use(function(err, req, res, next) {
 
 })
 
+// if(!module.parent){
+// application.listen(3001);
+// }
 
 
-// application.use(function(err,req,res,next){
-// 	res.status(err.status);
-// 	res.send(err)
-// })
-
-
+console.log('app running')
 
 application.listen(3001);
 
 
-
-// application.get('/v1/users/:id', function(req,res){
-// 	// console.log(req.params.id)
-// 	usermodel.User.findOne({
-// 		where : {id: req.params.id},
-// 		attributes:['username','address']
-// 	})
-// 	.then(function(result){
-// 		res.status(200);
-// 		res.json(result)
-// 	})
-// 	.catch(function(err){
-// console.log(err);
-// 		res.status(500);
-
-// 	})
-// })
-
-// application.put('/v1/users/:id', function(req,res){
-// 	// console.log(req.body)
-// 	// console.log(req.query);
-// 	// console.log(req.params);
-// 	// console.log('req.query');
-// 	usermodel.User.update({
-// 		username:req.body.username
-// 	},
-// 	{where: { id:req.params.id}
-// })
-// })
+module.exports = application;
 
 
 
-// application.delete('/v1/users/:id',function(req,res){
-// usermodel.User.destroy({
-// 	where : { id : req.params.id}
-// })
-// })
+
+

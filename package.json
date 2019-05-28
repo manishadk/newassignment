@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "development": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "development": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -21,10 +20,18 @@
     "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
     "express": "^4.16.4",
+    "jasmine": "^3.4.0",
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^1.6.5",
     "sequelize": "^5.8.5",
     "swagger-jsdoc": "^3.2.9",
     "swagger-ui-express": "^4.0.4"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "chai-like": "^1.1.1",
+    "chai-things": "^0.2.0",
+    "nyc": "^14.1.1"
   }
 }
