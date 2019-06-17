@@ -33,7 +33,6 @@ usermodel.User.findOne({
 	where : {username:req.body.username}
 })
 .then(function(result){
-	console.log(result.dataValues);
 if (result.dataValues != '') {
 	next({"status":409,"message":'username already exists'})
 }
